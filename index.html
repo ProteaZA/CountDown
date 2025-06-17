@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Week & Day Tracker</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1em;
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .counter {
+      margin-bottom: 1em;
+      font-size: 1.2em;
+    }
+    .label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="counter" id="count-up"></div>
+  <div class="counter" id="count-down"></div>
+
+  <script>
+    // ✅ EDIT THESE DATES
+    const startDate = new Date("2025-05-06");
+    const dueDate = new Date("2026-02-10");
+
+    function updateCounter() {
+      const now = new Date();
+
+      // Count UP from startDate
+      const elapsedMs = now - startDate;
+      const elapsedDays = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
+      const elapsedWeeks = Math.floor(elapsedDays / 7) + 1;
+      const elapsedWeekDay = (elapsedDays % 7) + 1;
+
+      // Count DOWN to dueDate
+      const remainingMs = dueDate - now;
+      const remainingDays = Math.max(0, Math.floor(remainingMs / (1000 * 60 * 60 * 24)));
+      const remainingWeeks = Math.floor(remainingDays / 7);
+      const remainingWeekDay = remainingDays % 7;
+
+      document.getElementById("count-up").innerHTML =
+        `<span class="label">Since Start:</span> Week ${elapsedWeeks}, Day ${elapsedWeekDay}`;
+
+      document.getElementById("count-down").innerHTML =
+        `<span class="label">Until Due:</span> ${remainingWeeks} week(s), ${remainingWeekDay} day(s) left`;
+    }
+
+    updateCounter();
+    setInterval(updateCounter, 1000 * 60 * 60); // Update every hour
+  </script>
+</body>
+</html>
